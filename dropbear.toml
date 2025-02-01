@@ -1,0 +1,25 @@
+binaries = ["dropbear"]
+
+paths = "/etc/dropbear"
+mount_devpts = true
+
+[masks.custom_init]
+"ugrd.base.console" = "custom_init"  # Don't use the normal console module as well
+
+[imports.config_processing]
+"ugrd.net.dropbear" = [ "_process_dropbear_authorized_keys" ]
+
+[imports.functions]
+"ugrd.net.dropbear" = [ "dropbear_wait", "drop_the_bear" ]
+
+[imports.custom_init]
+"ugrd.net.dropbear" = [ "dropbear_init" ]
+
+[imports.build_tasks]
+"ugrd.net.dropbear" = [ "add_dropbear_keys" ]
+
+[imports.build_final]
+"ugrd.net.dropbear" = [ "dropbear_finalize" ]
+
+[custom_parameters]
+dropbear_authorized_keys = "Path"  # Path to the authorized_keys file
